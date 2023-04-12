@@ -12,6 +12,7 @@ from pymongo import MongoClient
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry import metrics
+
 from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapPropagator
 
 # some id global vars
@@ -105,10 +106,11 @@ def make_pizza():
 
     # with tracer.start_as_current_span("/ping", context=ctx):    
 
-    # carrier = {}
-    # TraceContextTextMapPropagator().inject(carrier)
-    headers = {"traceparent": request.headers.environ['HTTP_TRACEPARENT']}
-    # carrier["traceparent"]}
+    carrier = {}
+    TraceContextTextMapPropagator().inject(carrier)
+    headers = {"traceparent": carrier["traceparent"]}
+    # headers = {"traceparent": request.headers.environ['HTTP_TRACEPARENT']}
+
     
     print (str_now()+"\t"+name+"\tRetrieve recipe for "+pizza_name)
     

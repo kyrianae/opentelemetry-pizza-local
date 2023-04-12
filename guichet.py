@@ -118,7 +118,7 @@ def pizza():
     print (str_now()+"\t"+pizza_name+"\t\tPizza delivered")
     return out+"\n"+str_now()+"\t"+pizza_name+"\t\tPizza delivered\n"
     
-    return "OK"
+    # return "OK"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

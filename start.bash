@@ -3,8 +3,8 @@
 
 for i in "customer" "freezer" "hoover" "guichet" "pizzaiolo" "recipes"  ; do
 echo Launch $i
-echo "export OTEL_SERVICE_NAME=$i; opentelemetry-instrument python3 $i.py > $i.log &"
-#export OTEL_SERVICE_NAME=$i; opentelemetry-instrument python3 $i.py > $i.log &
+export OTEL_SERVICE_NAME=$i; opentelemetry-instrument python3 $i.py 2>$i.err >$i.log &
+
 done
 
-echo watch curl 127.0.0.1:8082/ask_for_pizza
+watch curl 127.0.0.1:8082/ask_for_pizza
