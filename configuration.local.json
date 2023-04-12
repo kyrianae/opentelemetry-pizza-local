@@ -1,0 +1,16 @@
+{
+    "identification":
+    { 
+        "environment": "local",
+        "project": "codenito-use-case"
+    },
+    "services":
+    {
+        "guichet": "http://127.0.0.1:8080",
+        "pizzaiolo": "http://127.0.0.1:8081",
+        "freezer": "http://127.0.0.1:8084",
+        "hoover": "http://127.0.0.1:8085",
+        "recipes": "http://127.0.0.1:8083",
+        "customer": "http://127.0.0.1:8082" 
+    }
+}

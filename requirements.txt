@@ -1,0 +1,5 @@
+flask
+logging
+python-dotenv
+requests
+pymongo
