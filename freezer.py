@@ -3,8 +3,9 @@ from flask import Flask, json, request, Response
 import random
 import datetime
 
-app = Flask("pizzaiolo")
-name="Freeze"
+name="Freezer"
+app = Flask(name)
+
 def str_now():
     return str(datetime.datetime.now())
 

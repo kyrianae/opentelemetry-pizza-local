@@ -9,6 +9,11 @@ from dotenv import dotenv_values
 from dotenv import load_dotenv
 from pymongo import MongoClient
 
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry import metrics
+from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapPropagator
+
 # some id global vars
 name="pizzaiolo"
 app = Flask(name)
@@ -75,14 +80,12 @@ logger.info("Server started")
 def str_now():
     return str(datetime.datetime.now())
 
-def get_sub_service(server, service):
+def get_sub_service(server, service, headers={}):
     url=server+"/"+service
     print (str_now()+"\t"+name+" calls: "+url)
-    # carrier = {}
-    # TraceContextTextMapPropagator().inject(carrier)
-    # header = {"traceparent": carrier["traceparent"]}
-    header = {}
-    x = requests.get(url,headers=header)  
+
+    # header = {}
+    x = requests.get(url,headers=headers)  
     print (x.text)
     return x.text
 
@@ -102,15 +105,20 @@ def make_pizza():
 
     # with tracer.start_as_current_span("/ping", context=ctx):    
 
+    # carrier = {}
+    # TraceContextTextMapPropagator().inject(carrier)
+    headers = {"traceparent": request.headers.environ['HTTP_TRACEPARENT']}
+    # carrier["traceparent"]}
+    
     print (str_now()+"\t"+name+"\tRetrieve recipe for "+pizza_name)
     
-    recipe=json.loads(get_sub_service(configuration['services']['recipes'], "get_recipe"+"?name="+pizza_name))
+    recipe=json.loads(get_sub_service(configuration['services']['recipes'], "get_recipe"+"?name="+pizza_name,headers))
     
 
     for ingredient in recipe['ingredients']:
-        get_sub_service(configuration['services']['freezer'], ingredient)
+        get_sub_service(configuration['services']['freezer'], ingredient,headers)
         
-    get_sub_service(configuration['services']['hoover'], "cook")
+    get_sub_service(configuration['services']['hoover'], "cook",headers)
     
     print (str_now()+"\t"+name+"\trecipe : "+str(recipe))
     print (str_now()+"\t"+name+"\tMade a "+recipe['name'])

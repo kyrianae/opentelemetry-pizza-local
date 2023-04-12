@@ -12,11 +12,11 @@ from dotenv import load_dotenv
 
 from flask import Flask, request
   
-# from opentelemetry import trace
-# from opentelemetry.sdk.trace import TracerProvider
-# from opentelemetry import metrics
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry import metrics
 
-# from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapPropagator
+from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapPropagator
 
 # provider = TracerProvider()
 # trace.set_tracer_provider(provider)
@@ -91,10 +91,10 @@ def str_now():
 def get_sub_service(server, service):
     url=server+"/"+service
     print (str_now()+"\t"+name+" calls: "+url)
-    # carrier = {}
-    # TraceContextTextMapPropagator().inject(carrier)
-    # header = {"traceparent": carrier["traceparent"]}
-    header = {}
+    carrier = {}
+    TraceContextTextMapPropagator().inject(carrier)
+    header = {"traceparent": carrier["traceparent"]}
+    # header = {}
     x = requests.get(url,headers=header)  
     print (x.text)
     return x.text

@@ -3,3 +3,10 @@ logging
 python-dotenv
 requests
 pymongo
+gunicorn
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-instrumentation
+opentelemetry-distro
+opentelemetry-instrumentation-flask
+opentelemetry-exporter-otlp

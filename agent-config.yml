@@ -1,0 +1,16 @@
+traces:
+  configs:
+  - name: default
+    remote_write:
+      - endpoint: tempo-us-central1.grafana.net:443
+        basic_auth:
+          username: 5554
+          password: glc_eyJvIjoiMjMxNjYyIiwibiI6InRyYWNlcyIsImsiOiJ3ZHhDOFIyaXB0Mk1jbzY0NjNuYThtNDMiLCJtIjp7InIiOiJ1cyJ9fQ==
+
+    receivers:
+      zipkin:
+      otlp:
+        protocols:
+          http:
+          grpc:
+      opencensus:
